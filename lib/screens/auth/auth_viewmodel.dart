@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../widgets/home_wrapper.dart';
+import '../home/home_screen.dart';
 import '../../services/auth/auth_service.dart';
 
 class AuthViewModel extends GetxController {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  authenticate() async {
+  authenticate(BuildContext context) async {
     _isLoading = true;
     update();
 
@@ -17,6 +18,10 @@ class AuthViewModel extends GetxController {
     _isLoading = false;
     update();
 
-    Get.offAll(HomeWrapper());
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => HomeScreen()),
+      (route) => false,
+    );
   }
 }

@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'constants/colors.dart';
 import 'services/locator.dart';
 import 'screens/auth/auth_screen.dart';
-import 'widgets/home_wrapper.dart';
+import 'screens/home/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         builder: (ctx, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data) {
-              return HomeWrapper();
+              return HomeScreen();
             } else {
               return AuthScreen();
             }

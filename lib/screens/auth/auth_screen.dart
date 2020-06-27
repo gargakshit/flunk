@@ -42,7 +42,8 @@ class AuthScreen extends StatelessWidget {
                 height: 24,
               ),
               ParallelogramButton(
-                onTap: model.isLoading ? null : model.authenticate,
+                onTap:
+                    model.isLoading ? null : () => model.authenticate(context),
                 width: 280,
                 child: model.isLoading
                     ? Center(
