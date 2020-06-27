@@ -13,6 +13,8 @@ dependencies:
   flutter_web_auth: ^0.2.4
   get: ^3.0.1
   get_storage: ^1.2.1
+  graphql_flutter: ^3.0.1
+  dio: ^3.0.9
 
 dev_dependencies:
   flutter_test:
