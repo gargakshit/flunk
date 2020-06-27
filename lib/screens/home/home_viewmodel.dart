@@ -14,6 +14,11 @@ class HomeViewModel extends GetxController {
   User _user;
   User get user => _user;
 
+  HomeViewModel() {
+    loadUser();
+    loadGitData();
+  }
+
   loadUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String data = sharedPreferences.getString("user");

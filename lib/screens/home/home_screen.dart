@@ -9,68 +9,64 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
       init: HomeViewModel(),
-      builder: (model) {
-        model.loadUser();
-        model.loadGitData();
-
-        return Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 12,
-                  ),
-                  model.user != null
-                      ? Row(
-                          children: [
-                            Container(
-                              width: 48,
-                              height: 48,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(64),
-                                image: DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                      model.user.avatarUrl),
+      builder: (model) => Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 12,
+                ),
+                model.user != null
+                    ? Row(
+                        children: [
+                          Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(64),
+                              image: DecorationImage(
+                                image: CachedNetworkImageProvider(
+                                  model.user.avatarUrl,
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 12,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  model.user.name,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w900,
-                                  ),
+                          ),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                model.user.name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w900,
                                 ),
-                                Text(
-                                  "@${model.user.login}",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.0,
-                                  ),
+                              ),
+                              Text(
+                                "@${model.user.login}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.0,
                                 ),
-                              ],
-                            ),
-                          ],
-                        )
-                      : CircularProgressIndicator(),
-                  CircularProgressIndicator(),
-                ],
-              ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : CircularProgressIndicator(),
+                CircularProgressIndicator(),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

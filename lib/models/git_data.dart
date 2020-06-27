@@ -283,16 +283,19 @@ class CommitEdges {
 
 class CommitNode {
   String messageHeadline;
+  String authoredDate;
 
-  CommitNode({this.messageHeadline});
+  CommitNode({this.messageHeadline, this.authoredDate});
 
   CommitNode.fromJson(Map<String, dynamic> json) {
     messageHeadline = json['messageHeadline'];
+    authoredDate = json['authoredDate'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['messageHeadline'] = this.messageHeadline;
+    data['authoredDate'] = this.authoredDate;
     return data;
   }
 }
