@@ -12,9 +12,11 @@ dependencies:
   google_fonts: ^1.1.0
   flutter_web_auth: ^0.2.4
   get: ^3.0.1
-  get_storage: ^1.2.1
   graphql_flutter: ^3.0.1
   dio: ^3.0.9
+  shared_preferences: ^0.5.7+3
+  flutter_icons: ^1.1.0
+  clippy_flutter: ^1.1.1
 
 dev_dependencies:
   flutter_test:

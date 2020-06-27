@@ -1,14 +1,24 @@
-import 'package:Flunk/services/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'services/auth/auth_service.dart';
+import 'constants/colors.dart';
+import 'services/locator.dart';
+import 'screens/auth/auth_screen.dart';
+import 'widgets/home_wrapper.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  Future<bool> authenticated() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String data = sharedPreferences.getString("accessToken");
+    return data != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     setupLocator();
@@ -18,18 +28,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: GoogleFonts.montserratTextTheme(),
+        canvasColor: primaryBg,
       ),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: RaisedButton(
-            onPressed: () async {
-              AuthService authService = Get.find<AuthService>();
-              print(await authService.authenticate());
-            },
-            child: Text("Login with github"),
-          ),
-        ),
+      home: FutureBuilder<bool>(
+        future: authenticated(),
+        builder: (ctx, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data) {
+              return HomeWrapper();
+            } else {
+              return AuthScreen();
+            }
+          }
+
+          return Container();
+        },
       ),
     );
   }
