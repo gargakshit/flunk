@@ -43,6 +43,12 @@ class HomeViewModel extends GetxController {
   int _firstYear = 0;
   int get firstYear => _firstYear;
 
+  int _score = 0;
+  int get score => _score;
+
+  int _rank = 0;
+  int get rank => _rank;
+
   HomeViewModel() {
     loadUser();
     loadGitData();
@@ -65,6 +71,8 @@ class HomeViewModel extends GetxController {
     _totalRepos = dataService.totalRepos(_gqlData);
     _totalCommits = dataService.totalCommits(_gqlData);
     _monthlyData = await dataService.commitHistory(_gqlData);
+    _score = dataService.calculateScore(_totalRepos, _totalCommits);
+    _rank = await dataService.getRank(_score);
 
     _firstYear = DateTime.now().year - ((monthlyData.length / 12).round()) + 1;
 

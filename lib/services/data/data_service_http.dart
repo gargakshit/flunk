@@ -8,8 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'data_service.dart';
 import '../../constants/query.dart';
 import '../../models/access_token.dart';
-import '../../models/monthly_aggregations.dart';
 import '../../models/git_data.dart';
+import '../../models/monthly_aggregations.dart';
+import '../../models/user.dart';
 import '../../utils/convert.dart';
 
 GQLData parseData(dynamic json) {
@@ -148,5 +149,37 @@ class DataServiceHttp implements DataService {
   @override
   Future<List<MonthlyAggregation>> commitHistory(GQLData data) async {
     return await compute(aggregateMonthlyData, data);
+  }
+
+  @override
+  int calculateScore(int repos, int commits) {
+    return (commits / repos).round();
+  }
+
+  @override
+  Future<int> getRank(int score) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String userRaw = sharedPreferences.getString("user");
+    User user = User.fromJson(jsonDecode(userRaw));
+
+    final Response response = await Dio().post(
+      "http://104.211.158.139:3009",
+      data: jsonEncode({
+        "username": user.login,
+        "score": score,
+      }),
+      options: Options(
+        headers: {
+          "content-type": "application/json",
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return int.parse(response.data);
+    } else {
+      print(response.data);
+      throw "Error fetching data...";
+    }
   }
 }

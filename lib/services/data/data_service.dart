@@ -8,4 +8,6 @@ abstract class DataService {
   Future<Map<String, Language>> languageData(GQLData data);
   int totalRepos(GQLData data);
   int totalCommits(GQLData data);
+  int calculateScore(int repos, int commits);
+  Future<int> getRank(int score);
 }

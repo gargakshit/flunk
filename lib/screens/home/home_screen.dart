@@ -153,6 +153,56 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
+                                height: 4,
+                              ),
+                              Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Your score: ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Riviera",
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${model.score}",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Your rank: ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Riviera",
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${model.rank}",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
                                 height: 40,
                               ),
                               Center(
