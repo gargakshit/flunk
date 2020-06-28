@@ -12,16 +12,22 @@ class AuthViewModel extends GetxController {
     _isLoading = true;
     update();
 
+    await Future.delayed(Duration(seconds: 1));
+
     AuthService authService = Get.find<AuthService>();
-    await authService.authenticate();
+    bool authenticated = await authService.authenticate();
+
+    await Future.delayed(Duration(seconds: 1));
 
     _isLoading = false;
     update();
 
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => HomeScreen()),
-      (route) => false,
-    );
+    if (authenticated) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => HomeScreen()),
+        (route) => false,
+      );
+    }
   }
 }

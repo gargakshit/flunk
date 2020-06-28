@@ -32,7 +32,6 @@ class HomeViewModel extends GetxController {
     DataService dataService = Get.find<DataService>();
 
     _gqlData = await dataService.getAllData();
-
-    update();
+    dataService.languageData(_gqlData);
   }
 }

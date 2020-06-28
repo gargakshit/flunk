@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   Future<bool> authenticated() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String data = sharedPreferences.getString("accessToken");
+    print(data);
     return data != null;
   }
 

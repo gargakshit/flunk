@@ -37,10 +37,12 @@ class Data {
 
 class Viewer {
   Repositories repositories;
+  String createdAt;
 
-  Viewer({this.repositories});
+  Viewer({this.repositories, this.createdAt});
 
   Viewer.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
     repositories = json['repositories'] != null
         ? new Repositories.fromJson(json['repositories'])
         : null;
@@ -51,6 +53,7 @@ class Viewer {
     if (this.repositories != null) {
       data['repositories'] = this.repositories.toJson();
     }
+    data['createdAt'] = this.createdAt;
     return data;
   }
 }
