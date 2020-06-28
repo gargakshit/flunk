@@ -31,9 +31,7 @@ class RemixScreen extends StatelessWidget {
                 color1: Color(0xff6D0B60),
                 color2: Color(0xffFF21B7),
                 action: FlatButton(
-                  onPressed: () {
-                    if (model.selectedImageUrl != "") model.next();
-                  },
+                  onPressed: model.selectedImageUrl != "" ? model.next() : null,
                   child: Text(
                     "NEXT",
                     style: TextStyle(
