@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../remix/remix_screen.dart';
 import '../../models/git_data.dart';
 import '../../models/language_data.dart';
 import '../../models/monthly_aggregations.dart';
@@ -98,5 +100,13 @@ class HomeViewModel extends GetxController {
     _currentYear = year;
 
     update();
+  }
+
+  offToPunk(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => RemixScreen(),
+      ),
+    );
   }
 }

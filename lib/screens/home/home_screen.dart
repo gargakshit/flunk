@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:share/share.dart';
 
 import 'home_viewmodel.dart';
 import '../../constants/colors.dart';
@@ -38,14 +39,17 @@ class HomeScreen extends StatelessWidget {
                   model.user != null
                       ? Row(
                           children: [
-                            Container(
-                              width: 48,
-                              height: 48,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(64),
-                                image: DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                    model.user.avatarUrl,
+                            InkWell(
+                              onTap: () => model.offToPunk(context),
+                              child: Container(
+                                width: 48,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(64),
+                                  image: DecorationImage(
+                                    image: CachedNetworkImageProvider(
+                                      model.user.avatarUrl,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -72,6 +76,20 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                            Expanded(
+                              child: Container(),
+                            ),
+                            IconButton(
+                              icon: Icon(Feather.share_2),
+                              color: Colors.white,
+                              tooltip: "Share",
+                              onPressed: model.loading
+                                  ? null
+                                  : () {
+                                      Share.share(
+                                          "I have ${model.totalCommits} commits accross ${model.totalRepos} repositories. I have been a GitHub member since ${model.firstYear}. #BitsAndPunks #Flunk");
+                                    },
                             ),
                           ],
                         )
@@ -172,6 +190,13 @@ class HomeScreen extends StatelessWidget {
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 24,
+                                      ),
+                                    ),
+                                    Text(
+                                      " / 100",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ],
@@ -290,6 +315,7 @@ class HomeScreen extends StatelessWidget {
                                   lineTouchData: LineTouchData(
                                     touchTooltipData: LineTouchTooltipData(
                                       tooltipBgColor: Color(0xff121212),
+                                      tooltipRoundedRadius: 24,
                                     ),
                                   ),
                                   backgroundColor:
@@ -346,6 +372,7 @@ class HomeScreen extends StatelessWidget {
                                       icon: Icon(Feather.chevron_left),
                                       color: Colors.white,
                                       disabledColor: Colors.white60,
+                                      tooltip: "Previous Year",
                                     ),
                                     Expanded(
                                       child: Container(),
@@ -361,6 +388,7 @@ class HomeScreen extends StatelessWidget {
                                       icon: Icon(Feather.chevron_right),
                                       color: Colors.white,
                                       disabledColor: Colors.white60,
+                                      tooltip: "Next Year",
                                     ),
                                   ],
                                 ),

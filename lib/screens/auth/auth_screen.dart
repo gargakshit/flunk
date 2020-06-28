@@ -60,6 +60,18 @@ class AuthScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  "Bit and Punks",
+                  style: TextStyle(
+                    color: gradient1Left,
+                    fontSize: 28.0,
+                    fontFamily: "Riviera",
+                    letterSpacing: 3,
+                  ),
+                ),
+                SizedBox(
                   height: 24,
                 ),
                 ParallelogramButton(
