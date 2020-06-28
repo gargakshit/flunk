@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/git_data.dart';
+import '../../models/language_data.dart';
+import '../../models/monthly_aggregations.dart';
 import '../../models/user.dart';
 import '../../services/data/data_service.dart';
 
@@ -13,6 +15,33 @@ class HomeViewModel extends GetxController {
 
   User _user;
   User get user => _user;
+
+  bool _loading = true;
+  bool get loading => _loading;
+
+  Map<String, Language> _langData;
+  Map<String, Language> get langData => _langData;
+
+  int _totalCommits;
+  int get totalCommits => _totalCommits;
+
+  int _totalRepos;
+  int get totalRepos => _totalRepos;
+
+  List<MonthlyAggregation> _monthlyData;
+  List<MonthlyAggregation> get monthlyData => _monthlyData;
+
+  int _currentMax = 0;
+  int get currentMax => _currentMax;
+
+  List<int> _currentData = List();
+  List<int> get currentData => _currentData;
+
+  int _currentYear = 2020;
+  int get currentYear => _currentYear;
+
+  int _firstYear = 0;
+  int get firstYear => _firstYear;
 
   HomeViewModel() {
     loadUser();
@@ -32,6 +61,34 @@ class HomeViewModel extends GetxController {
     DataService dataService = Get.find<DataService>();
 
     _gqlData = await dataService.getAllData();
-    dataService.languageData(_gqlData);
+    _langData = await dataService.languageData(_gqlData);
+    _totalRepos = dataService.totalRepos(_gqlData);
+    _totalCommits = dataService.totalCommits(_gqlData);
+    _monthlyData = await dataService.commitHistory(_gqlData);
+
+    _firstYear = DateTime.now().year - ((monthlyData.length / 12).round()) + 1;
+
+    _monthlyData.sublist(_monthlyData.length - 12).forEach((element) {
+      _currentData.add(element.commits);
+      _currentYear = element.year;
+
+      if (_currentMax < element.commits) _currentMax = element.commits;
+    });
+
+    _loading = false;
+
+    update();
+  }
+
+  loadDataForYear(int year) {
+    _currentData.clear();
+    _monthlyData.sublist((year - _firstYear) * 12).forEach((element) {
+      _currentData.add(element.commits);
+
+      if (_currentMax < element.commits) _currentMax = element.commits;
+    });
+    _currentYear = year;
+
+    update();
   }
 }

@@ -10,6 +10,7 @@ import '../../constants/query.dart';
 import '../../models/access_token.dart';
 import '../../models/monthly_aggregations.dart';
 import '../../models/git_data.dart';
+import '../../utils/convert.dart';
 
 GQLData parseData(dynamic json) {
   return GQLData.fromJson(json);
@@ -50,6 +51,49 @@ Map<String, Language> aggregateLanguageData(GQLData gqlData) {
   return sortedData;
 }
 
+List<MonthlyAggregation> aggregateMonthlyData(GQLData gqlData) {
+  DateTime dateOfJoining = DateTime.parse(gqlData.data.viewer.createdAt);
+  int yearOfJoining = dateOfJoining.year;
+
+  DateTime now = DateTime.now();
+  int yearNow = now.year;
+
+  List<MonthlyAggregation> data = List();
+
+  for (int year = yearOfJoining; year <= yearNow; year++) {
+    for (int month = 1; month <= 12; month++) {
+      data.add(MonthlyAggregation(
+        year: year,
+        month: intToMonth(month),
+        commits: 0,
+      ));
+    }
+  }
+
+  List<RepoEdges> repos = gqlData.data.viewer.repositories.repoEdges;
+
+  repos.forEach((repo) {
+    if (repo.repoNodes.defaultBranchRef != null) {
+      List<CommitEdges> commitEdges =
+          repo.repoNodes.defaultBranchRef.target.history.commitEdges;
+
+      commitEdges.forEach((commitEdge) {
+        CommitNode commitNode = commitEdge.commitNode;
+
+        if (commitNode.authoredDate != null) {
+          DateTime commitTime = DateTime.parse(commitNode.authoredDate);
+
+          int item =
+              ((commitTime.year - yearOfJoining) * 12) + commitTime.month;
+          data[item - 1].commits++;
+        }
+      });
+    }
+  });
+
+  return data;
+}
+
 class DataServiceHttp implements DataService {
   @override
   Future<GQLData> getAllData() async {
@@ -70,7 +114,6 @@ class DataServiceHttp implements DataService {
 
     if (response.statusCode == 200) {
       GQLData data = await compute(parseData, response.data);
-      print(data.data.viewer.repositories.totalCount);
 
       return data;
     } else {
@@ -82,5 +125,28 @@ class DataServiceHttp implements DataService {
   @override
   Future<Map<String, Language>> languageData(GQLData gqlData) async {
     return await compute(aggregateLanguageData, gqlData);
+  }
+
+  @override
+  int totalCommits(GQLData data) {
+    return data.data.viewer.repositories.repoEdges.toList().fold<int>(
+          0,
+          (previousValue, element) =>
+              previousValue +
+              (element.repoNodes.defaultBranchRef == null
+                  ? 0
+                  : element
+                      .repoNodes.defaultBranchRef.target.history.totalCount),
+        );
+  }
+
+  @override
+  int totalRepos(GQLData data) {
+    return data.data.viewer.repositories.totalCount;
+  }
+
+  @override
+  Future<List<MonthlyAggregation>> commitHistory(GQLData data) async {
+    return await compute(aggregateMonthlyData, data);
   }
 }

@@ -16,7 +16,7 @@ enum Month {
 class MonthlyAggregation {
   final Month month;
   final int year;
-  final int commits;
+  int commits;
 
   MonthlyAggregation({
     this.month,
