@@ -1,6 +1,6 @@
 # Flunk
 
-The Flutter cyberpunk app. Built for the [flutter hackathon](https://flutterhackathon.com)
+The Flutter cyberpunk app. Built for the [flutter hackathon](https://flutterhackathon.com) #Hack20.
 
 ---
 
@@ -18,3 +18,12 @@ The Flutter cyberpunk app. Built for the [flutter hackathon](https://flutterhack
 ## Download
 
 A release build is published on GitHub releases
+
+---
+
+## Screenshots
+
+![onboarding](./screenshots/onboarding.png)
+![login](./screenshots/login.png)
+![dashboard](./screenshots/dashboard.png)
+![remix](./screenshots/remix.png)
