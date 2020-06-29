@@ -25,6 +25,14 @@ class RemixViewModel extends GetxController {
 
   ScreenshotController screenshotController = ScreenshotController();
 
+  double _opacity = 0.2;
+  double get opacity => _opacity;
+
+  setOpacity(double opacity) {
+    _opacity = opacity;
+    update();
+  }
+
   next() async {
     File scrot = await screenshotController.capture();
 
