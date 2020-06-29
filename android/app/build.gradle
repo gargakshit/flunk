@@ -6,12 +6,6 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def keystoreProperties = new Properties()
-   def keystorePropertiesFile = rootProject.file('key.properties')
-   if (keystorePropertiesFile.exists()) {
-       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   }
-
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -31,6 +25,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     compileSdkVersion 28
 
@@ -42,6 +42,14 @@ android {
         disable 'InvalidPackage'
     }
 
+    defaultConfig {
+        applicationId "garg.akshit.hackathons.Flunk"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
     signingConfigs {
        release {
            keyAlias keystoreProperties['keyAlias']
@@ -51,19 +59,12 @@ android {
        }
    }
 
-    defaultConfig {
-        applicationId "garg.akshit.hackathons.Flunk"
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-    }
+   buildTypes {
+       release {
+           signingConfig signingConfigs.release
+       }
+   }
 
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
 }
 
 flutter {
