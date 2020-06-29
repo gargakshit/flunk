@@ -25,7 +25,7 @@ class RemixViewModel extends GetxController {
 
   ScreenshotController screenshotController = ScreenshotController();
 
-  double _opacity = 0.2;
+  double _opacity = 0.9;
   double get opacity => _opacity;
 
   setOpacity(double opacity) {
@@ -34,7 +34,9 @@ class RemixViewModel extends GetxController {
   }
 
   next() async {
-    File scrot = await screenshotController.capture();
+    File scrot = await screenshotController.capture(
+      pixelRatio: 3,
+    );
 
     if ((Platform.isAndroid && await Permission.storage.request().isGranted) ||
         Platform.isIOS) {
@@ -48,7 +50,13 @@ class RemixViewModel extends GetxController {
 
       Get.dialog(
         AlertDialog(
-          title: Text("Image saved to gallery"),
+          title: Text(
+            "Image saved to gallery",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Color(0xff1B0536),
           actions: [
             FlatButton(
               onPressed: () async {
@@ -62,7 +70,7 @@ class RemixViewModel extends GetxController {
               child: Text(
                 "Apply it on GitHub",
                 style: TextStyle(
-                  color: Color(0xff6D0B60),
+                  color: Color(0xffFF21B7),
                 ),
               ),
             ),
@@ -96,6 +104,7 @@ class RemixViewModel extends GetxController {
     if (pickedFile != null) {
       Get.dialog(
         AlertDialog(
+          backgroundColor: Color(0xff1B0536),
           actions: [
             FlatButton(
               onPressed: () {
@@ -104,7 +113,7 @@ class RemixViewModel extends GetxController {
               child: Text(
                 "Cancel",
                 style: TextStyle(
-                  color: Color(0xff6D0B60),
+                  color: Color(0xffFF21B7),
                 ),
               ),
             ),
@@ -151,6 +160,31 @@ class RemixViewModel extends GetxController {
                 if (httpResponse.statusCode == 200 &&
                     httpResponse.data.toString() != "") {
                   _selectedImageUrl = httpResponse.data.toString();
+                } else {
+                  Get.dialog(
+                    AlertDialog(
+                      backgroundColor: Color(0xff1B0536),
+                      actions: [
+                        FlatButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text(
+                            "OK",
+                            style: TextStyle(
+                              color: Color(0xffFF21B7),
+                            ),
+                          ),
+                        ),
+                      ],
+                      title: Text(
+                        "Looks like some error while processing, please try later.",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  );
                 }
 
                 _loading = false;
@@ -170,7 +204,12 @@ class RemixViewModel extends GetxController {
               fit: BoxFit.cover,
             ),
           ),
-          title: Text("Are you sure?"),
+          title: Text(
+            "Are you sure?",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
         ),
       );
     }

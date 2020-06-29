@@ -62,17 +62,32 @@ class AuthScreen extends StatelessWidget {
                 SizedBox(
                   height: 4,
                 ),
-                Text(
-                  "Bit and Punks",
-                  style: TextStyle(
-                    color: gradient1Left,
-                    fontSize: 28.0,
-                    fontFamily: "Riviera",
-                    letterSpacing: 3,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Bits a",
+                      style: TextStyle(
+                        color: gradient1Left,
+                        fontSize: 22.0,
+                        fontFamily: "Riviera",
+                        letterSpacing: 3,
+                      ),
+                    ),
+                    Text(
+                      "nd Punks",
+                      style: TextStyle(
+                        color: gradient1Right,
+                        fontSize: 22.0,
+                        fontFamily: "Riviera",
+                        letterSpacing: 3,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: 24,
+                  height: 32,
                 ),
                 ParallelogramButton(
                   onTap: model.isLoading

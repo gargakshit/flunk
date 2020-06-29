@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get/get.dart';
 
 class GradientAppBar extends StatelessWidget {
   final String title;
@@ -8,6 +7,7 @@ class GradientAppBar extends StatelessWidget {
   final Color color1;
   final Color color2;
   final Widget action;
+  final Function pop;
 
   GradientAppBar({
     @required this.title,
@@ -15,6 +15,7 @@ class GradientAppBar extends StatelessWidget {
     @required this.color1,
     @required this.color2,
     this.action,
+    @required this.pop,
   });
 
   @override
@@ -32,7 +33,7 @@ class GradientAppBar extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Feather.chevron_left),
-            onPressed: () => navigator.pop(),
+            onPressed: pop,
             color: Colors.white,
           ),
           SizedBox(

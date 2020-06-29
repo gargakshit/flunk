@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/colors.dart';
 import 'services/locator.dart';
-import 'screens/auth/auth_screen.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/onboarding/onboarding_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data) {
               return HomeScreen();
             } else {
-              return AuthScreen();
+              return OnboardingScreen();
             }
           }
 

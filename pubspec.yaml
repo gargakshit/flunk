@@ -30,6 +30,7 @@ dependencies:
   permission_handler: ^5.0.1+1
   image_gallery_saver: ^1.5.0
   url_launcher: ^5.4.11
+  intro_views_flutter: ^2.8.1
 
 dev_dependencies:
   flutter_test:
