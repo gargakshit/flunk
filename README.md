@@ -2,7 +2,14 @@
 
 The Flutter cyberpunk app. Built for the [flutter hackathon](https://flutterhackathon.com) #Hack20.
 
----
+## Download
+
+A release build is published on GitHub releases
+
+## Links
+
+[YouTube](https://www.youtube.com/watch?v=8ZJ5fvrmkIM)
+[Backend](https://github.com/gargakshit/flunk-backend)
 
 ## Building
 
@@ -12,14 +19,6 @@ The Flutter cyberpunk app. Built for the [flutter hackathon](https://flutterhack
 - Setup your signing keys
 - Change the secrets
 - Run build.sh
-
----
-
-## Download
-
-A release build is published on GitHub releases
-
----
 
 ## Screenshots
 
