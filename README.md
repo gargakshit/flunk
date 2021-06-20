@@ -1,5 +1,7 @@
 # Flunk
 
+**Warning:** the project is currently stalled
+
 The Flutter cyberpunk app. Built for the [flutter hackathon](https://flutterhackathon.com) #Hack20.
 
 ## Download
